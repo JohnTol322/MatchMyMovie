@@ -5,10 +5,10 @@ Additionally, MatchMyMovie makes it easy to discover and watch movies with frien
 
 Key Features:
 
-    Swipe through a wide range of films and express your preferences.
-    Receive personalized movie recommendations based on your taste.
-    Discover which films your friends enjoy and get shared recommendations.
-    Leverage the power of the TMDB API to access the latest releases and popular films.
-    Find movies in all genres, from action to comedy, that align with your preferences.
+ - Swipe through a wide range of films and express your preferences.
+ - Receive personalized movie recommendations based on your taste.
+ - Discover which films your friends enjoy and get shared recommendations.
+ - Leverage the power of the TMDB API to access the latest releases and popular films.
+ - Find movies in all genres, from action to comedy, that align with your preferences.
 
 MatchMyMovie makes discovering films fun, personal, and social!
