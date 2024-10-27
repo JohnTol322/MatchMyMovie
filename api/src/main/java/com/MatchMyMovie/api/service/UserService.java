@@ -32,7 +32,7 @@ public class UserService {
         if (!ValidationUtil.emailIsValid(user.email())) {
             throw new Exception("Invalid email address");
         }
-        if (!ValidationUtil.isNullOrEmpty(user.username())) {
+        if (ValidationUtil.isNullOrEmpty(user.username())) {
             throw new Exception("Fill in all fields");
         }
         if (!ValidationUtil.passwordIsValid(user.password())) {
