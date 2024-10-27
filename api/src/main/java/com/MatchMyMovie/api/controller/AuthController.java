@@ -28,8 +28,8 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<ApiResponse<String>> authenticate(@RequestBody LoginDetails loginDetails) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDetails.getEmail(), loginDetails.getPassword()));
-            String token = jwtUtil.generateToken(loginDetails.getEmail());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDetails.email(), loginDetails.password()));
+            String token = jwtUtil.generateToken(loginDetails.email());
 
             return ResponseEntity.ok(new ApiResponse<>("Token generated successfully", token, 200));
 
