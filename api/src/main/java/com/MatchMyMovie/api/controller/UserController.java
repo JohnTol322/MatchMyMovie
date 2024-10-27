@@ -26,11 +26,11 @@ public class UserController {
             UserDTO response = this.userService.createUser(user);
             return ResponseEntity
                     .status(201)
-                    .body(new ApiResponse<>("User successfully created", response));
+                    .body(new ApiResponse<>("User successfully created", response, 200));
         } catch (Exception e) {
             return ResponseEntity
                     .status(400)
-                    .body(new ApiResponse<>(e.getMessage(), null));
+                    .body(new ApiResponse<>(e.getMessage(), null, 400));
         }
     }
 }
