@@ -5,9 +5,9 @@ import com.MatchMyMovie.api.entity.user.UserCreationDTO;
 import com.MatchMyMovie.api.entity.user.UserDTO;
 import com.MatchMyMovie.api.repository.UserRepository;
 import com.MatchMyMovie.api.util.ValidationUtil;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +35,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws BadCredentialsException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = this.userRepository.findByEmail(email);
         if (user == null) {
-            throw new BadCredentialsException("User not found");
+            throw new UsernameNotFoundException("User not found");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
