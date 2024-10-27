@@ -5,10 +5,16 @@ import com.MatchMyMovie.api.entity.user.UserCreationDTO;
 import com.MatchMyMovie.api.entity.user.UserDTO;
 import com.MatchMyMovie.api.repository.UserRepository;
 import com.MatchMyMovie.api.util.ValidationUtil;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -21,11 +27,20 @@ public class UserService {
 
         User newUser = new User();
         newUser.setUsername(user.username());
-        newUser.setPassword(user.password());
+        newUser.setPassword(new BCryptPasswordEncoder().encode(user.password()));
         newUser.setEmail(user.email());
         User savedUser = this.userRepository.saveAndFlush(newUser);
 
         return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = this.userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 
     private void validateUser(UserCreationDTO user) throws Exception {
