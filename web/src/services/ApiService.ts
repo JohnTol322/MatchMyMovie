@@ -2,14 +2,16 @@ import {HttpMethod} from "../models/api/HttpMethod";
 import {ApiResponse} from "../models/api/ApiResponse";
 
 class ApiService {
-    static apiUrl: string = "localhost:8080";
+    static apiUrl: string = "http://localhost:8080";
     public call<T>(path: string, method: HttpMethod = HttpMethod.GET, body: string | null = null, formData: FormData | null = null): Promise<ApiResponse<T>> {
         return new Promise((resolve, reject) => {
             const requestMethod: string = HttpMethod[method];
             const requestOptions: RequestInit = {
                 method: requestMethod,
                 mode: "cors",
-                headers: {}
+                headers: {
+                    "Content-Type": "application/json"
+                }
             };
 
             if (body) {
