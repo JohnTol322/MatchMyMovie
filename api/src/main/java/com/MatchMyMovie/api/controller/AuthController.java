@@ -31,7 +31,7 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDetails.getEmail(), loginDetails.getPassword()));
             String token = jwtUtil.generateToken(loginDetails.getEmail());
 
-            return ResponseEntity.ok(new ApiResponse<String>("Token generated successfully", token, 200));
+            return ResponseEntity.ok(new ApiResponse<>("Token generated successfully", token, 200));
 
         } catch (BadCredentialsException | UsernameNotFoundException e) {
             return ResponseEntity.status(401).body(new ApiResponse<>("Invalid credentials", null, 401));
