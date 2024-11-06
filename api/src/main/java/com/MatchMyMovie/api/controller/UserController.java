@@ -1,8 +1,8 @@
 package com.MatchMyMovie.api.controller;
 
-import com.MatchMyMovie.api.entity.response.ApiResponse;
-import com.MatchMyMovie.api.entity.user.UserCreationDTO;
-import com.MatchMyMovie.api.entity.user.UserDTO;
+import com.MatchMyMovie.api.model.ApiResponse;
+import com.MatchMyMovie.api.model.user.UserCreationDTO;
+import com.MatchMyMovie.api.model.user.UserDTO;
 import com.MatchMyMovie.api.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

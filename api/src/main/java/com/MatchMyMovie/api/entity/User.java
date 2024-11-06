@@ -1,4 +1,4 @@
-package com.MatchMyMovie.api.entity.user;
+package com.MatchMyMovie.api.entity;
 
 import jakarta.persistence.*;
 
