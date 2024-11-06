@@ -1,19 +1,29 @@
 package com.MatchMyMovie.api.model.movie;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Movie {
     private long id;
+    @JsonProperty("original_title")
     private String originalTitle;
     private String title;
     private String overview;
+    @JsonProperty("poster_path")
     private String posterPath;
+    @JsonProperty("backdrop_path")
     private String backdropPath;
+    @JsonProperty("genre_ids")
     private int[] genreIds;
+    @JsonProperty("release_date")
     private String releaseDate;
+    @JsonProperty("vote_average")
     private double voteAverage;
+    @JsonProperty("vote_count")
     private int voteCount;
     private boolean adult;
     private boolean video;
     private double popularity;
+    @JsonProperty("original_language")
     private String originalLanguage;
 
     public long getId() {
