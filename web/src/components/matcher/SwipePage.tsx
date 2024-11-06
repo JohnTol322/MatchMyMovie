@@ -60,6 +60,7 @@ const SwipePage = () => {
                             {
                                 currentStack.map((movie, index) => (
                                     <img className={`movie-poster ${index === 0 ? swipeClass : ""}`}
+                                         key={movie.id}
                                          style={{
                                              top: `${index * 8}px`,
                                              left: `${index * 8}px`,
