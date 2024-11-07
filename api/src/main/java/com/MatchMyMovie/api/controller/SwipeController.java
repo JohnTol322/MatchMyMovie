@@ -26,7 +26,7 @@ public class SwipeController {
             SwipeDTO response = this.swipeService.saveSwipe(swipeCreationDTO);
             return ResponseEntity
                     .status(201)
-                    .body(new ApiResponse<>("Swipe successfully created", response, 201));
+                    .body(new ApiResponse<>("Swipe successfully saved", response, 201));
         } catch (Exception e) {
             return ResponseEntity
                     .status(400)

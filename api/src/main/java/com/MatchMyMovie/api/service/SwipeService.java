@@ -29,6 +29,6 @@ public class SwipeService {
 
         Swipe savedSwipe = this.swipeRepository.save(newSwipe);
 
-        return new SwipeDTO(savedSwipe.getId(), savedSwipe.getMovieId(), new UserDTO(user.getId(), user.getUsername(), user.getEmail()), savedSwipe.isLiked());
+        return new SwipeDTO(savedSwipe.getId(), savedSwipe.getMovieId(), user.getId(), savedSwipe.isLiked());
     }
 }
