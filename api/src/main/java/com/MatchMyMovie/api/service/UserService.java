@@ -26,6 +26,16 @@ public class UserService implements UserDetailsService {
     public UserDTO createUser(UserCreationDTO user) throws Exception {
         this.validateUser(user);
 
+        User existingUsername = this.userRepository.findByUsername(user.username());
+        User existingEmail = this.userRepository.findByEmail(user.email());
+
+        if (existingEmail != null) {
+            throw new Exception("User with email " + user.email() + " already exists");
+        }
+        if (existingUsername != null) {
+            throw new Exception("User with username " + user.username() + " already exists");
+        }
+
         User newUser = new User();
         newUser.setUsername(user.username());
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.password()));
