@@ -35,11 +35,10 @@ public class UserService implements UserDetailsService {
         return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
     }
 
-    public UserDTO getAuthenticatedUser() {
+    public User getAuthenticatedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails userDetails) {
-            User user = this.userRepository.findByUsername(userDetails.getUsername());
-            return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
+            return this.userRepository.findByEmail(userDetails.getUsername());
         } else {
             return null;
         }
@@ -51,7 +50,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 
     private void validateUser(UserCreationDTO user) throws Exception {
