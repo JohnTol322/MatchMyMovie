@@ -5,6 +5,7 @@ import com.MatchMyMovie.api.model.user.UserCreationDTO;
 import com.MatchMyMovie.api.model.user.UserDTO;
 import com.MatchMyMovie.api.repository.UserRepository;
 import com.MatchMyMovie.api.util.ValidationUtil;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +33,16 @@ public class UserService implements UserDetailsService {
         User savedUser = this.userRepository.saveAndFlush(newUser);
 
         return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+    }
+
+    public UserDTO getAuthenticatedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            User user = this.userRepository.findByUsername(userDetails.getUsername());
+            return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
+        } else {
+            return null;
+        }
     }
 
     @Override
