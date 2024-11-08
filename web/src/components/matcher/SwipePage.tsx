@@ -2,6 +2,10 @@ import React, {useEffect} from "react";
 import "./SwipePage.scss";
 import {movieService} from "../../services/MovieService";
 import {Movie} from "../../models/Movie";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import AuthError from "../../models/errors/AuthError";
+import {redirect, useNavigate} from "react-router-dom";
 
 const SwipePage = () => {
 
@@ -9,6 +13,8 @@ const SwipePage = () => {
     const [currentIndex, setCurrentIndex] = React.useState(0);
     const [swipeRight, setSwipeRight] = React.useState(false);
     const [swipeLeft, setSwipeLeft] = React.useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -18,7 +24,13 @@ const SwipePage = () => {
 
         movieService.discoverMovies()
             .then(setMovies)
-            .catch(console.error);
+            .catch((error) => {
+                if (error instanceof AuthError) {
+                    return navigate("/login");
+                } else {
+                    console.error(error);
+                }
+            });
 
     }, [setMovies]);
 

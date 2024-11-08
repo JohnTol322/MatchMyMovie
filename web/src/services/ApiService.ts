@@ -1,6 +1,7 @@
 import {HttpMethod} from "../models/api/HttpMethod";
 import {ApiResponse} from "../models/api/ApiResponse";
 import AuthService from "./AuthService";
+import AuthError from "../models/errors/AuthError";
 
 class ApiService {
     static apiUrl: string = "http://localhost:8080";
@@ -16,6 +17,10 @@ class ApiService {
             };
 
             if (secure) {
+                if (!localStorage.getItem(AuthService.tokenKey)) {
+                    return reject(new AuthError('No token found'));
+                }
+
                 requestOptions.headers = {
                     ...requestOptions.headers,
                     "Authorization": `Bearer ${localStorage.getItem(AuthService.tokenKey)}`

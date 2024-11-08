@@ -1,6 +1,7 @@
 import React from "react";
 import {LoginDetails} from "../models/LoginDetails";
 import {authService} from "../services/AuthService";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const [loginDetails, setLoginDetails] = React.useState<LoginDetails>({
@@ -8,12 +9,15 @@ const Login = () => {
         password: "",
     });
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
         authService.login(loginDetails).then((success) => {
             if (success) {
                 console.log("Login successful");
+                navigate("/matcher");
             } else {
                 console.log("Login failed");
             }
