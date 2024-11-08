@@ -6,6 +6,7 @@ import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
 import AuthError from "../../models/errors/AuthError";
 import {redirect, useNavigate} from "react-router-dom";
+import {swipeService} from "../../services/SwipeService";
 
 const SwipePage = () => {
 
@@ -43,6 +44,11 @@ const SwipePage = () => {
     const handleSwipeRight = () => {
         if (swipeRight || swipeLeft) return;
 
+        const movie = movies[currentIndex];
+
+        swipeService.saveSwipe({movieId: movie.id, liked: true})
+            .catch(console.error);
+
         setSwipeRight(true);
         setTimeout(() => {
             setCurrentIndex(currentIndex + 1);
@@ -52,6 +58,11 @@ const SwipePage = () => {
 
     const handleSwipeLeft = () => {
         if (swipeRight || swipeLeft) return;
+
+        const movie = movies[currentIndex];
+
+        swipeService.saveSwipe({movieId: movie.id, liked: false})
+            .catch(console.error);
 
         setSwipeLeft(true);
         setTimeout(() => {
