@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import "./HomePage.scss";
 import CardList from "./CardList/CardList";
+import {Link} from "react-router-dom";
 
 const HomePage = () => {
 
@@ -19,7 +20,9 @@ const HomePage = () => {
                 <div className="logo-container">
                     <div className="logo"></div>
                     <div className="start-buttons">
-                        <button className="start-btn">GET STARTED</button>
+                        <Link to={"/matcher"}>
+                            <button className="start-btn">GET STARTED</button>
+                        </Link>
                         <button className="more-btn" onClick={scrollToCards}>READ MORE</button>
                     </div>
                 </div>

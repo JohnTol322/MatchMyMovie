@@ -1,0 +1,43 @@
+.movie-stack {
+  position: relative;
+  margin-top: 10%;
+  width: 370px;
+  height: 555px;
+
+  .movie-poster {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    transition: transform 0.5s ease;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+    &.likeSwipe {
+      animation: rightSwipeAnimation 0.5s forwards;
+    }
+    &.dislikeSwipe {
+      animation: leftSwipeAnimation 0.5s forwards;
+    }
+  }
+}
+
+@keyframes rightSwipeAnimation {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300px) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes leftSwipeAnimation {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-300px) rotate(-30deg);
+    opacity: 0;
+  }
+}

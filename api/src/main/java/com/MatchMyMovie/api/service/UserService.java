@@ -1,10 +1,11 @@
 package com.MatchMyMovie.api.service;
 
-import com.MatchMyMovie.api.entity.user.User;
-import com.MatchMyMovie.api.entity.user.UserCreationDTO;
-import com.MatchMyMovie.api.entity.user.UserDTO;
+import com.MatchMyMovie.api.entity.User;
+import com.MatchMyMovie.api.model.user.UserCreationDTO;
+import com.MatchMyMovie.api.model.user.UserDTO;
 import com.MatchMyMovie.api.repository.UserRepository;
 import com.MatchMyMovie.api.util.ValidationUtil;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +26,16 @@ public class UserService implements UserDetailsService {
     public UserDTO createUser(UserCreationDTO user) throws Exception {
         this.validateUser(user);
 
+        User existingUsername = this.userRepository.findByUsername(user.username());
+        User existingEmail = this.userRepository.findByEmail(user.email());
+
+        if (existingEmail != null) {
+            throw new Exception("User with email " + user.email() + " already exists");
+        }
+        if (existingUsername != null) {
+            throw new Exception("User with username " + user.username() + " already exists");
+        }
+
         User newUser = new User();
         newUser.setUsername(user.username());
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.password()));
@@ -34,13 +45,22 @@ public class UserService implements UserDetailsService {
         return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
     }
 
+    public User getAuthenticatedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            return this.userRepository.findByEmail(userDetails.getUsername());
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = this.userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 
     private void validateUser(UserCreationDTO user) throws Exception {

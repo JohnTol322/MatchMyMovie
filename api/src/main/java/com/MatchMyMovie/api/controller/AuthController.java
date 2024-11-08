@@ -1,7 +1,7 @@
 package com.MatchMyMovie.api.controller;
 
-import com.MatchMyMovie.api.entity.LoginDetails;
-import com.MatchMyMovie.api.entity.response.ApiResponse;
+import com.MatchMyMovie.api.model.user.LoginDetails;
+import com.MatchMyMovie.api.model.ApiResponse;
 import com.MatchMyMovie.api.util.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
