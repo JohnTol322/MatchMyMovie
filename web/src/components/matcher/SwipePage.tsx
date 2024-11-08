@@ -7,6 +7,8 @@ import error = Simulate.error;
 import AuthError from "../../models/errors/AuthError";
 import {redirect, useNavigate} from "react-router-dom";
 import {swipeService} from "../../services/SwipeService";
+import MovieStack from "./MovieStack/MovieStack";
+import SwipeButtonSet from "./SwipeButtonSet/SwipeButtonSet";
 
 const SwipePage = () => {
 
@@ -41,32 +43,23 @@ const SwipePage = () => {
         movies[currentIndex + 2]
     ];
 
-    const handleSwipeRight = () => {
+    const handleSwipe = (liked: boolean) => {
         if (swipeRight || swipeLeft) return;
 
         const movie = movies[currentIndex];
 
-        swipeService.saveSwipe({movieId: movie.id, liked: true})
+        swipeService.saveSwipe({movieId: movie.id, liked})
             .catch(console.error);
 
-        setSwipeRight(true);
+        if (liked) {
+            setSwipeRight(true);
+        } else {
+            setSwipeLeft(true);
+        }
+
         setTimeout(() => {
             setCurrentIndex(currentIndex + 1);
             setSwipeRight(false);
-        }, 500);
-    };
-
-    const handleSwipeLeft = () => {
-        if (swipeRight || swipeLeft) return;
-
-        const movie = movies[currentIndex];
-
-        swipeService.saveSwipe({movieId: movie.id, liked: false})
-            .catch(console.error);
-
-        setSwipeLeft(true);
-        setTimeout(() => {
-            setCurrentIndex(currentIndex + 1);
             setSwipeLeft(false);
         }, 500);
     }
@@ -79,28 +72,12 @@ const SwipePage = () => {
                 {
                     movies[currentIndex] === undefined ?
                         <div>Loading...</div> :
-                        <div className="movie-stack">
-                            {
-                                currentStack.map((movie, index) => (
-                                    <img className={`movie-poster ${index === 0 ? swipeClass : ""}`}
-                                         key={movie.id}
-                                         style={{
-                                             top: `${index * 8}px`,
-                                             left: `${index * 8}px`,
-                                             zIndex: currentStack.length - index
-                                         }}
-                                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                    />
-                                ))
-                            }
-                        </div>
+                        <MovieStack swipeClass={swipeClass}
+                                    stack={currentStack}/>
                 }
-                <div className="swipe-buttons">
-                    <img onClick={handleSwipeLeft}
-                         src={require("../../assets/images/dislikeButton.png")} alt={"dislike"}/>
-                    <img onClick={handleSwipeRight}
-                         src={require("../../assets/images/likeButton.png")} alt={"dislike"}/>
-                </div>
+
+                <SwipeButtonSet onSwipeLeft={() => handleSwipe(false)}
+                                onSwipeRight={() => handleSwipe(true)}/>
             </div>
         </div>
     );
