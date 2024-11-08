@@ -41,7 +41,7 @@ class ApiService {
                     }
 
                     resolve(jsonResponse);
-                }).then(reject);
+                }).catch(reject);
         });
     }
 }
