@@ -7,7 +7,7 @@ class UserService {
 
     public createUser(user: User): Promise<ApiResponse<User>> {
         return new Promise((resolve, reject) => {
-            apiService.call<User>('/api/user', HttpMethod.POST, JSON.stringify(user))
+            apiService.call<User>('/api/user', HttpMethod.POST, false, JSON.stringify(user))
                 .then((response) => {
                     resolve(response);
                 }).catch(reject);

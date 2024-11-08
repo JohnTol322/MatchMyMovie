@@ -6,7 +6,7 @@ class MovieService {
 
     public discoverMovies(): Promise<Movie[]> {
         return new Promise<Movie[]>((resolve, reject) => {
-            apiService.call<Movie[]>("/api/movies", HttpMethod.GET).then((response) => {
+            apiService.call<Movie[]>("/api/movies", HttpMethod.GET, true).then((response) => {
                 if (response.status !== 200) {
                     return reject(response.message);
                 }
