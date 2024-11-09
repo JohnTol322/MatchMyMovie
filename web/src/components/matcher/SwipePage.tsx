@@ -77,7 +77,9 @@ const SwipePage = () => {
                 }
 
                 <SwipeButtonSet onSwipeLeft={() => handleSwipe(false)}
-                                onSwipeRight={() => handleSwipe(true)}/>
+                                onSwipeRight={() => handleSwipe(true)}
+                                onInfoClick={() => {}}
+                />
             </div>
         </div>
     );
