@@ -15,9 +15,8 @@ const MovieDetailsOverlay: React.FC<MovieDetailsProps> = ({
     return (
         <div className={`overlay ${showOverlay && "overlay-animation"}`}>
             <div style={{margin: "36px"}}>
-                <b className="title">{movie?.title}</b>
+                <b className="title">{movie?.title} ({movie?.release_date.split("-")[0]})</b>
                 <p className="tagline">{movie?.tagline}</p>
-
                 <hr/>
                 <p className="overview">{movie?.overview}</p>
             </div>

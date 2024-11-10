@@ -65,6 +65,21 @@ const SwipePage = () => {
         }, 500);
     }
 
+    const handleMovieDetails = () => {
+        setShowInfo(true);
+
+        movieService.getMovieDetails(movies[currentIndex].id)
+            .then(setMovieDetails)
+            .catch((error) => {
+                if (error instanceof AuthError) {
+                    return navigate("/login");
+                } else {
+                    console.error(error);
+                }
+            });
+
+    }
+
     const swipeClass: string = swipeRight ? "likeSwipe" : swipeLeft ? "dislikeSwipe" : "";
 
     return (
@@ -79,7 +94,7 @@ const SwipePage = () => {
 
                 <SwipeButtonSet onSwipeLeft={() => handleSwipe(false)}
                                 onSwipeRight={() => handleSwipe(true)}
-                                onInfoClick={() => setShowInfo(true)}
+                                onInfoClick={handleMovieDetails}
                 />
 
                 <MovieDetailsOverlay showOverlay={showInfo} movie={movieDetails}/>

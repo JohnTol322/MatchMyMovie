@@ -29,7 +29,7 @@ export interface MovieDetails extends Movie {
         name: string;
         poster_path: string;
         backdrop_path: string;
-    }[];
+    };
     homepage?: string;
     imdb_id?: string;
     production_companies?: {
