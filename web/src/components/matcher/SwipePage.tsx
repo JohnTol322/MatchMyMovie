@@ -97,7 +97,10 @@ const SwipePage = () => {
                                 onInfoClick={handleMovieDetails}
                 />
 
-                <MovieDetailsOverlay showOverlay={showInfo} movie={movieDetails}/>
+                <MovieDetailsOverlay showOverlay={showInfo}
+                                     movie={movieDetails}
+                                     closeOverlay={() => setShowInfo(false)}
+                />
             </div>
         </div>
     );
