@@ -1,21 +1,22 @@
 import React, {useEffect} from "react";
 import "./SwipePage.scss";
 import {movieService} from "../../services/MovieService";
-import {Movie} from "../../models/Movie";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+import {Movie, MovieDetails} from "../../models/Movie";
 import AuthError from "../../models/errors/AuthError";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {swipeService} from "../../services/SwipeService";
 import MovieStack from "./MovieStack/MovieStack";
 import SwipeButtonSet from "./SwipeButtonSet/SwipeButtonSet";
+import MovieDetailsOverlay from "./MovieDetailsOverlay/MovieDetailsOverlay";
 
 const SwipePage = () => {
 
     const [movies, setMovies] = React.useState<Movie[]>([]);
+    const [movieDetails, setMovieDetails] = React.useState<MovieDetails | null>(null);
     const [currentIndex, setCurrentIndex] = React.useState(0);
     const [swipeRight, setSwipeRight] = React.useState(false);
     const [swipeLeft, setSwipeLeft] = React.useState(false);
+    const [showInfo, setShowInfo] = React.useState(false);
 
     const navigate = useNavigate();
 
@@ -78,8 +79,10 @@ const SwipePage = () => {
 
                 <SwipeButtonSet onSwipeLeft={() => handleSwipe(false)}
                                 onSwipeRight={() => handleSwipe(true)}
-                                onInfoClick={() => {}}
+                                onInfoClick={() => setShowInfo(true)}
                 />
+
+                <MovieDetailsOverlay showOverlay={showInfo} movie={movieDetails}/>
             </div>
         </div>
     );
