@@ -6,16 +6,18 @@ interface MovieDetailsProps {
     showOverlay: boolean;
     movie: MovieDetails | null;
     closeOverlay: () => void;
+    animation: "up" | "down" | null
 }
 
 const MovieDetailsOverlay: React.FC<MovieDetailsProps> = ({
                                                               showOverlay,
                                                               movie,
-                                                              closeOverlay
+                                                              closeOverlay,
+                                                              animation
                                                           }) => {
 
     return (
-        <div className={`overlay ${showOverlay && "overlay-animation"}`}>
+        <div className={`overlay ${animation ?? animation} ${showOverlay && `animate-overlay`}`}>
             <div style={{margin: "36px"}}>
                 <img src={require("../../../assets/images/closeIcon.png")}
                      className="close-icon"

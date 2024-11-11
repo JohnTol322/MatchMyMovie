@@ -8,6 +8,7 @@ import {swipeService} from "../../services/SwipeService";
 import MovieStack from "./MovieStack/MovieStack";
 import SwipeButtonSet from "./SwipeButtonSet/SwipeButtonSet";
 import MovieDetailsOverlay from "./MovieDetailsOverlay/MovieDetailsOverlay";
+import movieDetailsOverlay from "./MovieDetailsOverlay/MovieDetailsOverlay";
 
 const SwipePage = () => {
 
@@ -17,6 +18,7 @@ const SwipePage = () => {
     const [swipeRight, setSwipeRight] = React.useState(false);
     const [swipeLeft, setSwipeLeft] = React.useState(false);
     const [showInfo, setShowInfo] = React.useState(false);
+    const [overlayAnimation, setOverlayAnimation] = React.useState<"up" | "down" | null>(null);
 
     const navigate = useNavigate();
 
@@ -66,7 +68,12 @@ const SwipePage = () => {
     }
 
     const handleMovieDetails = () => {
+        setOverlayAnimation("up");
         setShowInfo(true);
+
+        if (movieDetails?.id === movies[currentIndex].id) {
+            return;
+        }
 
         movieService.getMovieDetails(movies[currentIndex].id)
             .then(setMovieDetails)
@@ -78,6 +85,13 @@ const SwipePage = () => {
                 }
             });
 
+    }
+
+    const closeOverlay = () => {
+        setOverlayAnimation("down");
+        setTimeout(() => {
+            setShowInfo(false);
+        }, 600);
     }
 
     const swipeClass: string = swipeRight ? "likeSwipe" : swipeLeft ? "dislikeSwipe" : "";
@@ -99,7 +113,8 @@ const SwipePage = () => {
 
                 <MovieDetailsOverlay showOverlay={showInfo}
                                      movie={movieDetails}
-                                     closeOverlay={() => setShowInfo(false)}
+                                     closeOverlay={closeOverlay}
+                                     animation={overlayAnimation}
                 />
             </div>
         </div>
