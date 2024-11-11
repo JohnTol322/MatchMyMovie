@@ -3,7 +3,7 @@ package com.MatchMyMovie.api.model.movie;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Movie {
-    private long id;
+    private Long id;
     @JsonProperty("original_title")
     private String originalTitle;
     private String title;
@@ -26,11 +26,11 @@ public class Movie {
     @JsonProperty("original_language")
     private String originalLanguage;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

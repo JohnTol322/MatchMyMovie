@@ -4,21 +4,30 @@ import "./SwipeButtonSet.scss";
 interface SwipeButtonSetProps {
     onSwipeRight: () => void;
     onSwipeLeft: () => void;
+    onInfoClick: () => void;
 }
 
-const SwipteButtonSet: React.FC<SwipeButtonSetProps> = ({
+const SwipeButtonSet: React.FC<SwipeButtonSetProps> = ({
                                                             onSwipeRight,
-                                                            onSwipeLeft
+                                                            onSwipeLeft,
+                                                            onInfoClick
                                                         }) => {
 
     return (
         <div className="swipe-buttons">
-            <img onClick={onSwipeLeft}
-                 src={require("../../../assets/images/dislikeButton.png")} alt={"dislike"}/>
-            <img onClick={onSwipeRight}
-                 src={require("../../../assets/images/likeButton.png")} alt={"dislike"}/>
+            <div className="left-side">
+                <img onClick={onSwipeLeft}
+                     src={require("../../../assets/images/dislikeButton.png")} alt={"dislike"}/>
+            </div>
+            <div className="right-side">
+                <img onClick={onSwipeRight}
+                     src={require("../../../assets/images/likeButton.png")} alt={"dislike"}/>
+                <img onClick={onInfoClick}
+                     className="info-icon"
+                     src={require("../../../assets/images/infoIcon.png")} alt={"info"}/>
+            </div>
         </div>
     );
 }
 
-export default SwipteButtonSet;
+export default SwipeButtonSet;

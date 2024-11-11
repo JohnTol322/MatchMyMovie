@@ -2,9 +2,11 @@ package com.MatchMyMovie.api.controller;
 
 import com.MatchMyMovie.api.model.ApiResponse;
 import com.MatchMyMovie.api.model.movie.Movie;
+import com.MatchMyMovie.api.model.movie.MovieDetails;
 import com.MatchMyMovie.api.service.MovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +28,19 @@ public class MovieController {
             return ResponseEntity
                     .status(200)
                     .body(new ApiResponse<>("Movies successfully retrieved", this.movieService.getMovies(), 200));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(500)
+                    .body(new ApiResponse<>(e.getMessage(), null, 500));
+        }
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<ApiResponse<MovieDetails>> getMovieDetails(@PathVariable Long id) {
+        try {
+            return ResponseEntity
+                    .status(200)
+                    .body(new ApiResponse<>("Movie details successfully retrieved", this.movieService.getMovieDetails(id), 200));
         } catch (Exception e) {
             return ResponseEntity
                     .status(500)
