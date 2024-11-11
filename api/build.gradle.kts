@@ -8,7 +8,7 @@ plugins {
 
 group = "com.MatchMyMovie"
 version = "0.0.1-SNAPSHOT"
-description = "api"
+description = "API for MatchMyMovie project"
 
 repositories {
     mavenLocal()
@@ -16,9 +16,12 @@ repositories {
 }
 
 dependencies {
-    api(libs.springframework.jpa)
-    api(libs.springframework.security)
-    api(libs.springframework.web)
+    implementation(libs.springframework.jpa)
+    implementation(libs.springframework.security)
+    implementation(libs.springframework.web)
+    implementation(libs.jjwt.api)
+    runtimeOnly(libs.jjwt.impl)
+    runtimeOnly(libs.jjwt.jackson)
     runtimeOnly(libs.postgresql)
     compileOnly(libs.lombok)
     developmentOnly(libs.springframework.devtools)
