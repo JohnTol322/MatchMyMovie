@@ -48,6 +48,7 @@ const SwipePage = () => {
 
     const handleSwipe = (liked: boolean) => {
         if (swipeRight || swipeLeft) return;
+        setMovieDetails(null);
 
         const movie = movies[currentIndex];
 
@@ -112,9 +113,10 @@ const SwipePage = () => {
                 />
 
                 <MovieDetailsOverlay showOverlay={showInfo}
-                                     movie={movieDetails}
+                                     movieDetails={movieDetails}
+                                     movieBase={movies[currentIndex]}
                                      closeOverlay={closeOverlay}
-                                     animation={overlayAnimation}
+                                     animationDirection={overlayAnimation}
                 />
             </div>
         </div>
