@@ -17,14 +17,14 @@ const SwipeButtonSet: React.FC<SwipeButtonSetProps> = ({
         <div className="swipe-buttons">
             <div className="left-side">
                 <img onClick={onSwipeLeft}
-                     src={require("../../../assets/images/dislikeButton.png")} alt={"dislike"}/>
+                     src={require("../../../assets/images/icons/dislikeButton.png")} alt={"dislike"}/>
             </div>
             <div className="right-side">
                 <img onClick={onSwipeRight}
-                     src={require("../../../assets/images/likeButton.png")} alt={"dislike"}/>
+                     src={require("../../../assets/images/icons/likeButton.png")} alt={"dislike"}/>
                 <img onClick={onInfoClick}
                      className="info-icon"
-                     src={require("../../../assets/images/infoIcon.png")} alt={"info"}/>
+                     src={require("../../../assets/images/icons/infoIcon.png")} alt={"info"}/>
             </div>
         </div>
     );

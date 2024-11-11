@@ -41,7 +41,7 @@ const MovieDetailsOverlay: React.FC<MovieDetailsProps> = ({
                  alt=""
             />
             <div style={{margin: "36px", height: "90%"}}>
-                <img src={require("../../../assets/images/closeIcon.png")}
+                <img src={require("../../../assets/images/icons/closeIcon.png")}
                      className="close-icon"
                      onClick={closeOverlay}
                      alt="close"
