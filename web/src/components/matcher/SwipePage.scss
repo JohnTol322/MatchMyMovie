@@ -1,0 +1,22 @@
+.swipe-page {
+  background: linear-gradient(145deg, #242B33 20.6%, #141C26 62.54%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  .swipe-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 90vh;
+    border-radius: 40px;
+    background: #3C4755;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+  }
+}
