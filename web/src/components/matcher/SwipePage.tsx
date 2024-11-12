@@ -51,8 +51,14 @@ const SwipePage = () => {
 
         const movie = movies[currentIndex];
 
-        swipeService.saveSwipe({movieId: movie.id, liked})
-            .catch(console.error);
+        swipeService.saveSwipe({movieId: movie.id, liked, genreIds: movie.genre_ids})
+            .catch((error) => {
+                if (error instanceof AuthError) {
+                    return navigate("/login");
+                } else {
+                    console.error(error);
+                }
+            });
 
         if (liked) {
             setSwipeRight(true);
