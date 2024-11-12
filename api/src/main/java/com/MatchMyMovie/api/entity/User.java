@@ -1,12 +1,14 @@
 package com.MatchMyMovie.api.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
 
     @Id
@@ -27,68 +29,12 @@ public class User {
         this.createdOn = new Date();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public List<Swipe> getSwipes() {
-        return swipes;
-    }
-
-    public void setSwipes(List<Swipe> swipes) {
-        this.swipes = swipes;
-    }
-
     public void addSwipe(Swipe swipe) {
         this.swipes.add(swipe);
     }
 
     public void removeSwipe(Swipe swipe) {
         this.swipes.remove(swipe);
-    }
-
-    public List<UserPreference> getUserPreferences() {
-        return userPreferences;
-    }
-
-    public void setUserPreferences(List<UserPreference> userPreferences) {
-        this.userPreferences = userPreferences;
     }
 
     public void addUserPreference(UserPreference userPreference) {
