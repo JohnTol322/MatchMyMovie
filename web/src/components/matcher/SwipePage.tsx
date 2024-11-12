@@ -8,7 +8,6 @@ import {swipeService} from "../../services/SwipeService";
 import MovieStack from "./MovieStack/MovieStack";
 import SwipeButtonSet from "./SwipeButtonSet/SwipeButtonSet";
 import MovieDetailsOverlay from "./MovieDetailsOverlay/MovieDetailsOverlay";
-import movieDetailsOverlay from "./MovieDetailsOverlay/MovieDetailsOverlay";
 
 const SwipePage = () => {
 
@@ -38,7 +37,7 @@ const SwipePage = () => {
                 }
             });
 
-    }, [setMovies]);
+    }, [setMovies, movies.length, navigate]);
 
     const currentStack = [
         movies[currentIndex],

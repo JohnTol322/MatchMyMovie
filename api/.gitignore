@@ -15,14 +15,7 @@ build/
 **/dist
 **/node_modules
 **/.env.local
-
-src/api/src/main/resources/application-prod.properties
-src/web/.env.production
-src/web/components.d.ts
-
-# Dutch election data files
-**/ElectionResults/**/
-election_data.json
+src/main/resources/env.properties
 
 # IDE - Intellij
 **/.idea/
