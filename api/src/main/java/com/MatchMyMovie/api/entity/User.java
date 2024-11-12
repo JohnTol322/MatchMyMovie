@@ -20,6 +20,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Swipe> swipes;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserPreference> userPreferences;
+
     public User() {
         this.createdOn = new Date();
     }
@@ -78,5 +81,21 @@ public class User {
 
     public void removeSwipe(Swipe swipe) {
         this.swipes.remove(swipe);
+    }
+
+    public List<UserPreference> getUserPreferences() {
+        return userPreferences;
+    }
+
+    public void setUserPreferences(List<UserPreference> userPreferences) {
+        this.userPreferences = userPreferences;
+    }
+
+    public void addUserPreference(UserPreference userPreference) {
+        this.userPreferences.add(userPreference);
+    }
+
+    public void removeUserPreference(UserPreference userPreference) {
+        this.userPreferences.remove(userPreference);
     }
 }
