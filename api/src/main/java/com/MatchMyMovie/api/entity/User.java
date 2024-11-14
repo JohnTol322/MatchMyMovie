@@ -3,6 +3,7 @@ package com.MatchMyMovie.api.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class User {
 
     public User() {
         this.createdOn = new Date();
+        this.userPreferences = new ArrayList<>();
+        this.swipes = new ArrayList<>();
     }
 
     public void addSwipe(Swipe swipe) {

@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.MessageFormat;
+
 @Service
 public class TmdbApiService {
 
@@ -21,15 +23,25 @@ public class TmdbApiService {
         this.apiKey = apiKey;
     }
 
-    public TmdbResponse discoverMovies() {
-        String url = "https://api.themoviedb.org/3/discover/movie";
+    public TmdbResponse discoverMovies(Integer page, Integer preferredGenre) {
+
+        if (page == null) {
+            page = 1;
+        }
+
+        String url = "https://api.themoviedb.org/3/discover/movie?page={0}";
+        String urlWithFilters = MessageFormat.format(url, page);
+
+        if (preferredGenre != null) {
+            urlWithFilters += "&with_genres=" + preferredGenre;
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<TmdbResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, TmdbResponse.class);
+        ResponseEntity<TmdbResponse> response = restTemplate.exchange(urlWithFilters, HttpMethod.GET, entity, TmdbResponse.class);
         return response.getBody();
     }
 

@@ -55,4 +55,13 @@ public class SwipeService {
 
         return new SwipeDTO(savedSwipe.getId(), savedSwipe.getMovieId(), user.getId(), savedSwipe.isLiked());
     }
+
+    public List<Swipe> getSwipesByAuthenticatedUser() {
+        User authenticatedUser = this.userService.getAuthenticatedUser();
+        return authenticatedUser.getSwipes();
+    }
+
+    public Integer getSwipesCountByAuthenticatedUser() {
+        return this.getSwipesByAuthenticatedUser().size();
+    }
 }
