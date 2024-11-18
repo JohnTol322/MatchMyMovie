@@ -3,5 +3,6 @@ export default interface Swipe {
     userId?: number;
     movieId: number;
     liked: boolean;
+    genreIds?: number[];
     createdOn?: Date;
 }

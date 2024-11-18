@@ -3,12 +3,10 @@ package com.MatchMyMovie.api.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "swipes")
+@Table(name = "user_preferences")
 @Data
-public class Swipe {
+public class UserPreference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +16,12 @@ public class Swipe {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Long movieId;
+    private Integer genreId;
 
-    private boolean liked;
+    private Integer preferenceScore;
 
-    private Date createdOn;
-
-    public Swipe() {
-        this.createdOn = new Date();
+    public void addPreferenceScore(Integer preferenceScore) {
+        this.preferenceScore += preferenceScore;
     }
+
 }

@@ -1,3 +1,5 @@
 package com.MatchMyMovie.api.model.swipe;
 
-public record SwipeCreationDTO(Long movieId, Boolean liked) { }
+import java.util.List;
+
+public record SwipeCreationDTO(Long movieId, Boolean liked, List<Integer> genreIds) { }

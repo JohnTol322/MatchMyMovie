@@ -1,12 +1,15 @@
 package com.MatchMyMovie.api.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
 
     @Id
@@ -20,56 +23,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Swipe> swipes;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserPreference> userPreferences;
+
     public User() {
         this.createdOn = new Date();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public List<Swipe> getSwipes() {
-        return swipes;
-    }
-
-    public void setSwipes(List<Swipe> swipes) {
-        this.swipes = swipes;
+        this.userPreferences = new ArrayList<>();
+        this.swipes = new ArrayList<>();
     }
 
     public void addSwipe(Swipe swipe) {
@@ -78,5 +38,13 @@ public class User {
 
     public void removeSwipe(Swipe swipe) {
         this.swipes.remove(swipe);
+    }
+
+    public void addUserPreference(UserPreference userPreference) {
+        this.userPreferences.add(userPreference);
+    }
+
+    public void removeUserPreference(UserPreference userPreference) {
+        this.userPreferences.remove(userPreference);
     }
 }

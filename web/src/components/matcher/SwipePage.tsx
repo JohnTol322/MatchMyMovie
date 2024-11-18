@@ -18,7 +18,7 @@ const SwipePage = () => {
     const [swipeLeft, setSwipeLeft] = React.useState(false);
     const [showInfo, setShowInfo] = React.useState(false);
     const [overlayAnimation, setOverlayAnimation] = React.useState<"up" | "down" | null>(null);
-
+    const [page, setPage] = React.useState(1);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,6 +39,23 @@ const SwipePage = () => {
 
     }, [setMovies, movies.length, navigate]);
 
+    useEffect(() => {
+        if (currentIndex > movies.length - 4 && currentIndex !== 0) {
+            movieService.discoverMovies(page + 1)
+                .then((newMovies) => {
+                    setMovies([...movies, ...newMovies]);
+                    setPage(page + 1);
+                })
+                .catch((error) => {
+                    if (error instanceof AuthError) {
+                        return navigate("/login");
+                    } else {
+                        console.error(error);
+                    }
+                });
+        }
+    }, [currentIndex, movies, page, navigate]);
+
     const currentStack = [
         movies[currentIndex],
         movies[currentIndex + 1],
@@ -51,8 +68,14 @@ const SwipePage = () => {
 
         const movie = movies[currentIndex];
 
-        swipeService.saveSwipe({movieId: movie.id, liked})
-            .catch(console.error);
+        swipeService.saveSwipe({movieId: movie.id, liked, genreIds: movie.genre_ids})
+            .catch((error) => {
+                if (error instanceof AuthError) {
+                    return navigate("/login");
+                } else {
+                    console.error(error);
+                }
+            });
 
         if (liked) {
             setSwipeRight(true);
