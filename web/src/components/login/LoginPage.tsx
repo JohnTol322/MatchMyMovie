@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     return (
         <div className="page-background">
-            <div className="form-container">
+            <div className="login-form-container">
                 <div className="login-title">
                     <b>Login</b>
                     <p>Don’t have an account? <Link className="register-link" to="/register">Create your free account here.</Link></p>
