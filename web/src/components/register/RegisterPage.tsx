@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import {userService} from "../../services/UserService";
 import {User} from "../../models/User";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./RegisterPage.scss";
 import {authService} from "../../services/AuthService";
 
@@ -14,6 +14,8 @@ const RegisterPage = () => {
         passwordConfirmation: ""
     });
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -33,7 +35,7 @@ const RegisterPage = () => {
                     authService.login({email: user.email, password: user.password}).then((success) => {
                         if (success) {
                             setIsLoading(false);
-                            // @todo navigate to onboarding
+                            navigate("/onboarding");
                         } else {
                             console.log("Login failed");
                         }
@@ -46,7 +48,7 @@ const RegisterPage = () => {
     return (
         <div className="page-background">
             <div className="register-form-container">
-                <div className="login-title">
+                <div className="register-title">
                     <b>Create an account</b>
                     <p>Already have an account? <Link className="register-link" to="/login">Log in here.</Link></p>
                 </div>
