@@ -23,6 +23,17 @@
     line-height: normal;
   }
 
+  .movie-description {
+    color: #FFF;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    height: 100px;
+    overflow: scroll;
+  }
+
   .release-date {
     color: #D3C4C4;
     font-family: "Inria Sans", sans-serif;

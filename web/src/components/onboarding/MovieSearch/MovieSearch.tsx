@@ -1,21 +1,38 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./MovieSearch.scss";
 import MovieSearchResult from "./MovieSearchResult/MovieSearchResult";
+import {movieService} from "../../../services/MovieService";
+import { Movie } from "../../../models/Movie";
 
 const MovieSearch: React.FC = () => {
+
+    const [searchResults, setSearchResults] = React.useState<Movie[]>([]);
+    const [searchTerm, setSearchTerm] = React.useState<string>("");
+
+    const handleSearch = () => {
+        movieService.searchMovies(searchTerm).then((movies) => {
+            setSearchResults(movies);
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
     return (
         <div className="movie-search-container">
             <div className="searchbar">
-                <input className="search-box" type="text" placeholder="Search for a movie"/>
-                <button className="search-btn">
+                <input onChange={(e) => setSearchTerm(e.target.value)}
+                       className="search-box"
+                       type="text"
+                       placeholder="Search for a movie"/>
+
+                <button onClick={handleSearch} className="search-btn">
                     <img src={require("../../../assets/images/icons/search.png")} alt="Search Icon"/>
                 </button>
             </div>
             <div className="movie-search-results">
-                <MovieSearchResult />
-                <MovieSearchResult />
-                <MovieSearchResult />
-                <MovieSearchResult />
+                {searchResults.map((movie) => (
+                    <MovieSearchResult key={movie.id} movie={movie}/>
+                ))}
             </div>
         </div>
     );
