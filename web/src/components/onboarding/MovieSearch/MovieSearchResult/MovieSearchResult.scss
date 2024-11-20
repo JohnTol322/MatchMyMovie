@@ -1,0 +1,35 @@
+.movie-result {
+  display: flex;
+  border-radius: 10px;
+  border: #FFFFFF 2px solid;
+  margin-bottom: 35px;
+
+  .movie-poster {
+    width: 147.673px;
+    height: 221px;
+    border-radius: 10px;
+    background-color: pink;
+  }
+
+  .movie-info {
+    padding: 10px;
+  }
+  .movie-title {
+    color: #FFF;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .release-date {
+    color: #D3C4C4;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    margin: 0;
+  }
+}

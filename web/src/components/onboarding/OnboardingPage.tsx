@@ -4,6 +4,7 @@ import FavoriteGenreList from "./FavoriteGenreList/FavoriteGenreList";
 import {Genre} from "../../models/Movie";
 import WatchProviderList from "./WatchProviderList/WatchProviderList";
 import WatchProvider from "../../models/WatchProvider";
+import MovieSearch from "./MovieSearch/MovieSearch";
 
 const OnboardingPage: React.FC = () => {
 
@@ -28,6 +29,8 @@ const OnboardingPage: React.FC = () => {
             case 2:
                 return <WatchProviderList setSelectedProviders={setSelectedProviders}
                                           selectedProviders={selectedProviders}/>;
+            case 3:
+                return <MovieSearch />;
         }
     }
 
@@ -42,7 +45,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                 </div>
                 {renderStep()}
-                <button style={{cursor: isLoading ? "default" : "cursor"}} disabled={isLoading}
+                <button className="next-btn" style={{cursor: isLoading ? "default" : "cursor"}} disabled={isLoading}
                         onClick={() => setCurrentStep(currentStep === totalSteps ? currentStep : currentStep + 1)}>
                     {isLoading ? "Loading..." : currentStep === totalSteps ? "Start swiping!" : "Next step"}
                 </button>
