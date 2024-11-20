@@ -41,6 +41,39 @@ const OnboardingPage: React.FC = () => {
         }
     }
 
+    const renderButton = () => {
+        let content;
+        if (isLoading) {
+            content = "Loading...";
+        } else if (currentStep === totalSteps) {
+            content = "Start swiping!";
+        } else {
+            content = "Next step";
+        }
+
+        const isDisabled = nextStepDisabled();
+
+        return (
+            <button className="next-btn" style={isDisabled ? {backgroundColor: "#3C4755", border: "#4BBBAE 2px solid", cursor: "default"} : {}} disabled={isDisabled}
+                    onClick={() => setCurrentStep(currentStep === totalSteps ? currentStep : currentStep + 1)}>
+                {content}
+            </button>
+        );
+    }
+
+    const nextStepDisabled = () => {
+        switch (currentStep) {
+            case 1:
+                return favoriteGenres.length === 0;
+            case 2:
+                return selectedProviders.length === 0;
+            case 3:
+                return favoriteMovie === undefined;
+            default:
+                return false;
+        }
+    }
+
     return (
         <div className="page-background">
             <div className="onboarding-container">
@@ -52,10 +85,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                 </div>
                 {renderStep()}
-                <button className="next-btn" style={{cursor: isLoading ? "default" : "cursor"}} disabled={isLoading}
-                        onClick={() => setCurrentStep(currentStep === totalSteps ? currentStep : currentStep + 1)}>
-                    {isLoading ? "Loading..." : currentStep === totalSteps ? "Start swiping!" : "Next step"}
-                </button>
+                {renderButton()}
             </div>
         </div>
     );
