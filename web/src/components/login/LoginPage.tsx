@@ -22,7 +22,7 @@ const LoginPage = () => {
                 console.log("Login successful");
                 setTimeout(() => {
                     userService.getAuthenticatedUser().then((user) => {
-                        localStorage.setItem("onboard_status", JSON.stringify(user.isOnboarded));
+                        localStorage.setItem("onboard_status", JSON.stringify(user.isOnboarded ? "finished" : "incomplete"));
                         if (!user.isOnboarded) {
                             setIsLoading(false);
                             navigate("/onboarding");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./OnboardingPage.scss";
 import FavoriteGenreList from "./FavoriteGenreList/FavoriteGenreList";
 import {Genre, Movie} from "../../models/Movie";
@@ -6,6 +6,7 @@ import WatchProviderList from "./WatchProviderList/WatchProviderList";
 import WatchProvider from "../../models/WatchProvider";
 import MovieSearch from "./MovieSearch/MovieSearch";
 import OnboardingSummary from "./OnboardingSummary/OnboardingSummary";
+import {useNavigate} from "react-router-dom";
 
 const OnboardingPage: React.FC = () => {
 
@@ -22,6 +23,14 @@ const OnboardingPage: React.FC = () => {
     const [selectedProviders, setSelectedProviders] = React.useState<WatchProvider[]>([]);
     const [favoriteMovie, setFavoriteMovie] = React.useState<Movie>();
     const [isLoading, setIsLoading] = React.useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const onboardStatus: string | null = localStorage.getItem("onboard_status");
+        if (onboardStatus === "finished") {
+            navigate("/matcher");
+        }
+    }, []);
 
     const renderStep = () => {
         switch (currentStep) {
