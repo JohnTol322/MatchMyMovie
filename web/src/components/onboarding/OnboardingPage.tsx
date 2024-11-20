@@ -5,6 +5,7 @@ import {Genre, Movie} from "../../models/Movie";
 import WatchProviderList from "./WatchProviderList/WatchProviderList";
 import WatchProvider from "../../models/WatchProvider";
 import MovieSearch from "./MovieSearch/MovieSearch";
+import OnboardingSummary from "./OnboardingSummary/OnboardingSummary";
 
 const OnboardingPage: React.FC = () => {
 
@@ -31,7 +32,12 @@ const OnboardingPage: React.FC = () => {
                 return <WatchProviderList setSelectedProviders={setSelectedProviders}
                                           selectedProviders={selectedProviders}/>;
             case 3:
-                return <MovieSearch favoriteMovie={favoriteMovie} setFavoriteMovie={setFavoriteMovie} />;
+                return <MovieSearch favoriteMovie={favoriteMovie}
+                                    setFavoriteMovie={setFavoriteMovie} />;
+            case 4:
+                return <OnboardingSummary favoriteGenres={favoriteGenres}
+                                          selectedProviders={selectedProviders}
+                                          favoriteMovie={favoriteMovie!} />
         }
     }
 

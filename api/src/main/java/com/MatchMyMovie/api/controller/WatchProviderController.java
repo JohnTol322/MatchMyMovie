@@ -24,7 +24,7 @@ public class WatchProviderController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<WatchProvider>>> getWatchProviders(@RequestParam Integer maxPriorityScore) {
         try {
-            List<WatchProvider> watchProviders = watchProviderService.getWatchProviders(10);
+            List<WatchProvider> watchProviders = watchProviderService.getWatchProviders(maxPriorityScore);
             return ResponseEntity.ok(new ApiResponse<>(
                     "Successfully retrieved all watch providers with at least '" + maxPriorityScore + "' priority",
                     watchProviders,

@@ -41,7 +41,7 @@ const WatchProviderList: React.FC<WatchProviderListProps> = ({
 
     return (
         <div className="watch-provider-container">
-            {watchProviders.map((watchProvider) => <WatchProviderItem handleSelectProvider={handleSelectProvider} provider={watchProvider} />)}
+            {watchProviders.map((watchProvider) => <WatchProviderItem key={watchProvider.provider_id} handleSelectProvider={handleSelectProvider} provider={watchProvider} />)}
         </div>
     );
 }
