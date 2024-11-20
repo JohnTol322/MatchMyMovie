@@ -19,6 +19,10 @@ public class GenreController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<Genre[]>> getAllMovieGenres() {
-        return ResponseEntity.ok(new ApiResponse<>("Successfully retrieved all movie genres", genreService.getAllMovieGenres(), 200));
+        try {
+            return ResponseEntity.ok(new ApiResponse<>("Successfully retrieved all movie genres", genreService.getAllMovieGenres(), 200));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(e.getMessage(), null, 500));
+        }
     }
 }
