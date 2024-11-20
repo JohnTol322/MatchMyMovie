@@ -96,4 +96,16 @@ public class TmdbApiService {
     }
 
 
+    public TmdbResponse getRecommendationsByMovieId(Integer movieId) {
+        String url = "https://api.themoviedb.org/3/movie/{0}/recommendations";
+        String urlWithId = MessageFormat.format(url, movieId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TmdbResponse> response = restTemplate.exchange(urlWithId, HttpMethod.GET, entity, TmdbResponse.class);
+        return response.getBody();
+    }
 }

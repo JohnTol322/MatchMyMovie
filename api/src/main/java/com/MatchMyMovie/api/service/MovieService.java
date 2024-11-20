@@ -29,6 +29,10 @@ public class MovieService {
             return tmdbApiService.discoverMovies(page, null).getResults();
         }
 
+        if (user.getSwipes().isEmpty()) {
+            return this.getRecommendationsByMovieId(user.getFavoriteMovieId());
+        }
+
         List<UserPreference> preferenceProfile = userPreferenceService.getUserPreferencesByAuthenticatedUser();
         Optional<UserPreference> highestPreference = preferenceProfile.stream()
                 .max(Comparator.comparingInt(UserPreference::getPreferenceScore));
@@ -39,6 +43,10 @@ public class MovieService {
 
         return tmdbApiService.discoverMovies(page, highestPreference.get().getGenreId()).getResults();
 
+    }
+
+    public List<Movie> getRecommendationsByMovieId(Integer movieId) {
+        return tmdbApiService.getRecommendationsByMovieId(movieId).getResults();
     }
 
     public MovieDetails getMovieDetails(Long id) {
