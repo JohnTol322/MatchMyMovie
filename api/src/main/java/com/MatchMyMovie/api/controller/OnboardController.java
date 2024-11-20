@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("/api/onboard")
+@RequestMapping("/api/onboarding")
 public class OnboardController {
 
     private final OnboardService onboardService;

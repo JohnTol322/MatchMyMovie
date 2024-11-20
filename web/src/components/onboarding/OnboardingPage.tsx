@@ -7,6 +7,7 @@ import WatchProvider from "../../models/WatchProvider";
 import MovieSearch from "./MovieSearch/MovieSearch";
 import OnboardingSummary from "./OnboardingSummary/OnboardingSummary";
 import {useNavigate} from "react-router-dom";
+import {onboardingService} from "../../services/OnboardingService";
 
 const OnboardingPage: React.FC = () => {
 
@@ -64,10 +65,18 @@ const OnboardingPage: React.FC = () => {
 
         return (
             <button className="next-btn" style={isDisabled ? {backgroundColor: "#3C4755", border: "#4BBBAE 2px solid", cursor: "default"} : {}} disabled={isDisabled}
-                    onClick={() => setCurrentStep(currentStep === totalSteps ? currentStep : currentStep + 1)}>
+                    onClick={onButtonClick}>
                 {content}
             </button>
         );
+    }
+
+    const onButtonClick = () => {
+        if (currentStep === totalSteps) {
+            saveOnboardingData();
+        } else {
+            setCurrentStep(currentStep + 1);
+        }
     }
 
     const nextStepDisabled = () => {
@@ -81,6 +90,23 @@ const OnboardingPage: React.FC = () => {
             default:
                 return false;
         }
+    }
+
+    const saveOnboardingData = () => {
+        setIsLoading(true);
+        onboardingService.addOnboardingToUser({
+            genreIds: favoriteGenres.map(genre => genre.id),
+            watchProviderIds: selectedProviders.map(provider => provider.provider_id),
+            favoriteMovieId: favoriteMovie!.id
+        }).then(() => {
+            setTimeout(() => {
+                localStorage.setItem("onboard_status", "finished");
+                setIsLoading(false);
+                navigate("/matcher");
+            }, 400);
+        }).catch(() => {
+            setIsLoading(false);
+        });
     }
 
     return (

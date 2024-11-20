@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
         newUser.setEmail(user.email());
         User savedUser = this.userRepository.saveAndFlush(newUser);
 
-        return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+        return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail(), savedUser.getIsOnboarded());
     }
 
     public void saveUser(User user) {
@@ -80,6 +80,6 @@ public class UserService implements UserDetailsService {
     }
 
     public static UserDTO convert(User user) {
-        return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getIsOnboarded());
     }
 }
