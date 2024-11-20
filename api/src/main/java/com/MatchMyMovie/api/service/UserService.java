@@ -45,6 +45,10 @@ public class UserService implements UserDetailsService {
         return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
     }
 
+    public void saveUser(User user) {
+        this.userRepository.saveAndFlush(user);
+    }
+
     public User getAuthenticatedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails userDetails) {
@@ -73,5 +77,9 @@ public class UserService implements UserDetailsService {
         if (!ValidationUtil.passwordIsValid(user.password())) {
             throw new Exception("Password must be at least 8 characters long");
         }
+    }
+
+    public static UserDTO convert(User user) {
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
     }
 }
