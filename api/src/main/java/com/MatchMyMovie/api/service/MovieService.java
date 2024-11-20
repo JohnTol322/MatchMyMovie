@@ -43,4 +43,8 @@ public class MovieService {
     public MovieDetails getMovieDetails(Long id) {
         return tmdbApiService.getMovieDetails(id);
     }
+
+    public List<Movie> searchForMovie(String query) {
+        return tmdbApiService.searchForMovie(query).getResults();
+    }
 }

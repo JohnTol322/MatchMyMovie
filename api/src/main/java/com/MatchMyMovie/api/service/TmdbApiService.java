@@ -82,5 +82,18 @@ public class TmdbApiService {
         return Objects.requireNonNull(response.getBody()).getResults();
     }
 
+    public TmdbResponse searchForMovie(String query) {
+        String url = "https://api.themoviedb.org/3/search/movie?query={0}";
+        String urlWithQuery = MessageFormat.format(url, query);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TmdbResponse> response = restTemplate.exchange(urlWithQuery, HttpMethod.GET, entity, TmdbResponse.class);
+        return response.getBody();
+    }
+
 
 }
