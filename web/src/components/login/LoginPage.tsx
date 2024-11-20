@@ -3,6 +3,7 @@ import {LoginDetails} from "../../models/LoginDetails";
 import {authService} from "../../services/AuthService";
 import {Link, useNavigate} from "react-router-dom";
 import "./LoginPage.scss";
+import {userService} from "../../services/UserService";
 
 const LoginPage = () => {
     const [loginDetails, setLoginDetails] = React.useState<LoginDetails>({
@@ -20,8 +21,16 @@ const LoginPage = () => {
             if (success) {
                 console.log("Login successful");
                 setTimeout(() => {
-                    setIsLoading(false);
-                    navigate("/matcher");
+                    userService.getAuthenticatedUser().then((user) => {
+                        localStorage.setItem("onboard_status", JSON.stringify(user.isOnboarded));
+                        if (!user.isOnboarded) {
+                            setIsLoading(false);
+                            navigate("/onboarding");
+                            return;
+                        }
+                        setIsLoading(false);
+                        navigate("/matcher");
+                    });
                 }, 500);
             } else {
                 console.log("Login failed");
