@@ -1,10 +1,12 @@
 import React from "react";
 import "./OnboardingPage.scss";
+import FavoriteGenreList from "./FavoriteGenreList/FavoriteGenreList";
+import {Genre} from "../../models/Movie";
 
 const OnboardingPage: React.FC = () => {
 
     const taglines: string[] = [
-        "What is your favorite genre?",
+        "What are your favorite genres?",
         "What watch providers do you use?",
         "What is your favorite movie?",
         "Summary"
@@ -12,7 +14,15 @@ const OnboardingPage: React.FC = () => {
 
     const [totalSteps] = React.useState(4);
     const [currentStep, setCurrentStep] = React.useState(1);
+    const [favoriteGenres, setFavoriteGenres] = React.useState<Genre[]>([]);
     const [isLoading, setIsLoading] = React.useState(false);
+
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1:
+                return <FavoriteGenreList favoriteGenres={favoriteGenres} setFavoriteGenres={setFavoriteGenres} />;
+        }
+    }
 
     return (
         <div className="page-background">
@@ -24,6 +34,7 @@ const OnboardingPage: React.FC = () => {
                         <div style={{width: `${(100 / totalSteps) * currentStep}%`}} className="progress"></div>
                     </div>
                 </div>
+                {renderStep()}
                 <button style={{cursor: isLoading ? "default" : "cursor"}} disabled={isLoading}
                         onClick={() => setCurrentStep(currentStep === totalSteps ? currentStep : currentStep + 1)}>
                     {isLoading ? "Loading..." : currentStep === totalSteps ? "Start swiping!" : "Next step"}
