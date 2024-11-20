@@ -1,5 +1,7 @@
 package com.MatchMyMovie.api.service;
 
+import com.MatchMyMovie.api.model.movie.Genre;
+import com.MatchMyMovie.api.model.movie.GenreResponse;
 import com.MatchMyMovie.api.model.movie.MovieDetails;
 import com.MatchMyMovie.api.model.movie.TmdbResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
+import java.util.Objects;
 
 @Service
 public class TmdbApiService {
@@ -55,6 +58,18 @@ public class TmdbApiService {
 
         ResponseEntity<MovieDetails> response = restTemplate.exchange(url, HttpMethod.GET, entity, MovieDetails.class);
         return response.getBody();
+    }
+
+    public Genre[] getAllMovieGenres() {
+        String url = "https://api.themoviedb.org/3/genre/movie/list";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<GenreResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, GenreResponse.class);
+        return Objects.requireNonNull(response.getBody()).getGenres();
     }
 
 
