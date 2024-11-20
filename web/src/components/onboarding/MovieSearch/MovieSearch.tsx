@@ -2,9 +2,17 @@ import React, {useEffect} from "react";
 import "./MovieSearch.scss";
 import MovieSearchResult from "./MovieSearchResult/MovieSearchResult";
 import {movieService} from "../../../services/MovieService";
-import { Movie } from "../../../models/Movie";
+import {Movie} from "../../../models/Movie";
 
-const MovieSearch: React.FC = () => {
+interface MovieSearchProps {
+    setFavoriteMovie: (movie: Movie) => void;
+    favoriteMovie?: Movie;
+}
+
+const MovieSearch: React.FC<MovieSearchProps> = ({
+                                                     setFavoriteMovie,
+                                                     favoriteMovie
+                                                 }) => {
 
     const [searchResults, setSearchResults] = React.useState<Movie[]>([]);
     const [searchTerm, setSearchTerm] = React.useState<string>("");
@@ -16,6 +24,12 @@ const MovieSearch: React.FC = () => {
             console.error(error);
         });
     }
+
+    useEffect(() => {
+        if (searchTerm === "") {
+            setSearchResults([]);
+        }
+    }, [searchTerm]);
 
     return (
         <div className="movie-search-container">
@@ -31,7 +45,8 @@ const MovieSearch: React.FC = () => {
             </div>
             <div className="movie-search-results">
                 {searchResults.map((movie) => (
-                    <MovieSearchResult key={movie.id} movie={movie}/>
+                    <MovieSearchResult isFavorite={favoriteMovie === movie} setFavorite={setFavoriteMovie}
+                                       key={movie.id} movie={movie}/>
                 ))}
             </div>
         </div>

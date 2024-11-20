@@ -1,7 +1,7 @@
 import React from "react";
 import "./OnboardingPage.scss";
 import FavoriteGenreList from "./FavoriteGenreList/FavoriteGenreList";
-import {Genre} from "../../models/Movie";
+import {Genre, Movie} from "../../models/Movie";
 import WatchProviderList from "./WatchProviderList/WatchProviderList";
 import WatchProvider from "../../models/WatchProvider";
 import MovieSearch from "./MovieSearch/MovieSearch";
@@ -19,6 +19,7 @@ const OnboardingPage: React.FC = () => {
     const [currentStep, setCurrentStep] = React.useState(1);
     const [favoriteGenres, setFavoriteGenres] = React.useState<Genre[]>([]);
     const [selectedProviders, setSelectedProviders] = React.useState<WatchProvider[]>([]);
+    const [favoriteMovie, setFavoriteMovie] = React.useState<Movie>();
     const [isLoading, setIsLoading] = React.useState(false);
 
     const renderStep = () => {
@@ -30,7 +31,7 @@ const OnboardingPage: React.FC = () => {
                 return <WatchProviderList setSelectedProviders={setSelectedProviders}
                                           selectedProviders={selectedProviders}/>;
             case 3:
-                return <MovieSearch />;
+                return <MovieSearch favoriteMovie={favoriteMovie} setFavoriteMovie={setFavoriteMovie} />;
         }
     }
 

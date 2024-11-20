@@ -13,34 +13,43 @@
 
   .movie-info {
     padding: 10px;
-  }
-  .movie-title {
-    color: #FFF;
-    font-family: "Inria Sans", sans-serif;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-  }
 
-  .movie-description {
-    color: #FFF;
-    font-family: "Inria Sans", sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    height: 100px;
-    overflow: scroll;
-  }
+    .movie-title {
+      color: #FFF;
+      font-family: "Inria Sans", sans-serif;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+    }
 
-  .release-date {
-    color: #D3C4C4;
-    font-family: "Inria Sans", sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    margin: 0;
+    .movie-description {
+      color: #FFF;
+      font-family: "Inria Sans", sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+      height: 100px;
+      overflow: scroll;
+    }
+
+    .release-date {
+      color: #D3C4C4;
+      font-family: "Inria Sans", sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+      margin: 0;
+    }
+  }
+  .favorite-btn {
+    background-color: #4BBBAE;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 }
