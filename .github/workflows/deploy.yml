@@ -1,6 +1,9 @@
 name: Deploy to Hetzner
 
 on:
+  pull_request:
+    branches:
+      - develop
   push:
     branches:
       - main  # Pas dit aan naar de branch die je wilt gebruiken
