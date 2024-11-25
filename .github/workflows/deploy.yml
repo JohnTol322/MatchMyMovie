@@ -51,7 +51,7 @@ jobs:
 
       - name: Set executable permissions for gradlew
         run: |
-          chmod +x ./gradlew  # Make gradlew executable
+          chmod +x api/gradlew  # Make gradlew executable
 
       - name: Build backend
         run: |
