@@ -49,6 +49,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set executable permissions for gradlew
+        run: |
+          chmod +x ./gradlew  # Make gradlew executable
+
       - name: Build backend
         run: |
           cd api
