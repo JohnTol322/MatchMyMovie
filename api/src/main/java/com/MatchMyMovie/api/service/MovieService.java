@@ -1,5 +1,6 @@
 package com.MatchMyMovie.api.service;
 
+import com.MatchMyMovie.api.entity.User;
 import com.MatchMyMovie.api.entity.UserPreference;
 import com.MatchMyMovie.api.model.movie.Movie;
 import com.MatchMyMovie.api.model.movie.MovieDetails;
@@ -14,18 +15,22 @@ public class MovieService {
 
     private final TmdbApiService tmdbApiService;
     private final UserPreferenceService userPreferenceService;
-    private final SwipeService swipeService;
+    private final UserService userService;
 
-    public MovieService(TmdbApiService tmdbApiService, UserPreferenceService userPreferenceService, SwipeService swipeService) {
+    public MovieService(TmdbApiService tmdbApiService, UserPreferenceService userPreferenceService, UserService userService) {
         this.tmdbApiService = tmdbApiService;
         this.userPreferenceService = userPreferenceService;
-        this.swipeService = swipeService;
+        this.userService = userService;
     }
 
     public List<Movie> getMovies(Integer page) {
-        Integer swipeCount = swipeService.getSwipesCountByAuthenticatedUser();
-        if (swipeCount < 15) {
+        User user = userService.getAuthenticatedUser();
+        if (!user.getIsOnboarded()) {
             return tmdbApiService.discoverMovies(page, null).getResults();
+        }
+
+        if (user.getSwipes().isEmpty()) {
+            return this.getRecommendationsByMovieId(user.getFavoriteMovieId());
         }
 
         List<UserPreference> preferenceProfile = userPreferenceService.getUserPreferencesByAuthenticatedUser();
@@ -40,7 +45,15 @@ public class MovieService {
 
     }
 
+    public List<Movie> getRecommendationsByMovieId(Integer movieId) {
+        return tmdbApiService.getRecommendationsByMovieId(movieId).getResults();
+    }
+
     public MovieDetails getMovieDetails(Long id) {
         return tmdbApiService.getMovieDetails(id);
+    }
+
+    public List<Movie> searchForMovie(String query) {
+        return tmdbApiService.searchForMovie(query).getResults();
     }
 }

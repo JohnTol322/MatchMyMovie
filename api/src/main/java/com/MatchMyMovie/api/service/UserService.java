@@ -42,7 +42,11 @@ public class UserService implements UserDetailsService {
         newUser.setEmail(user.email());
         User savedUser = this.userRepository.saveAndFlush(newUser);
 
-        return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+        return new UserDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail(), savedUser.getIsOnboarded());
+    }
+
+    public void saveUser(User user) {
+        this.userRepository.saveAndFlush(user);
     }
 
     public User getAuthenticatedUser() {
@@ -73,5 +77,9 @@ public class UserService implements UserDetailsService {
         if (!ValidationUtil.passwordIsValid(user.password())) {
             throw new Exception("Password must be at least 8 characters long");
         }
+    }
+
+    public static UserDTO convert(User user) {
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getIsOnboarded());
     }
 }

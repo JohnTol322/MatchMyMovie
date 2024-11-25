@@ -44,4 +44,17 @@ public class MovieController {
                     .body(new ApiResponse<>(e.getMessage(), null, 500));
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<Movie>>> searchForMovie(@RequestParam String query) {
+        try {
+            return ResponseEntity
+                    .status(200)
+                    .body(new ApiResponse<>("Movies successfully retrieved", this.movieService.searchForMovie(query), 200));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(500)
+                    .body(new ApiResponse<>(e.getMessage(), null, 500));
+        }
+    }
 }

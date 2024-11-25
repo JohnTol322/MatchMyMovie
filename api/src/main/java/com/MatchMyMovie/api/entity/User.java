@@ -18,6 +18,14 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private Integer favoriteMovieId;
+    private Boolean isOnboarded;
+
+    @ElementCollection
+    @CollectionTable(name = "user_watch_providers", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "watch_provider_id")
+    private List<Integer> watchProviderIds;
+
     private Date createdOn;
 
     @OneToMany(mappedBy = "user")
@@ -30,6 +38,8 @@ public class User {
         this.createdOn = new Date();
         this.userPreferences = new ArrayList<>();
         this.swipes = new ArrayList<>();
+        this.watchProviderIds = new ArrayList<>();
+        this.isOnboarded = false;
     }
 
     public void addSwipe(Swipe swipe) {

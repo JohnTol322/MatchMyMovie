@@ -1,14 +1,12 @@
 package com.MatchMyMovie.api.controller;
 
+import com.MatchMyMovie.api.entity.User;
 import com.MatchMyMovie.api.model.ApiResponse;
 import com.MatchMyMovie.api.model.user.UserCreationDTO;
 import com.MatchMyMovie.api.model.user.UserDTO;
 import com.MatchMyMovie.api.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -31,6 +29,16 @@ public class UserController {
             return ResponseEntity
                     .status(400)
                     .body(new ApiResponse<>(e.getMessage(), null, 400));
+        }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserDTO>> getAuthenticatedUser() {
+        try {
+            User user = this.userService.getAuthenticatedUser();
+            return ResponseEntity.ok(new ApiResponse<>("User retrieved successfully", UserService.convert(user), 200));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>("Failed to retrieve user", null, 400));
         }
     }
 }

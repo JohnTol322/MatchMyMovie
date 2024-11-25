@@ -32,6 +32,20 @@ class MovieService {
             }).catch(reject);
         });
     }
+
+    public searchMovies(query: string): Promise<Movie[]> {
+        return new Promise((resolve, reject) => {
+            apiService.call<Movie[]>(`/api/movies/search?query=${query}`, HttpMethod.GET, true).then((response) => {
+                if (response.status === 403 || response.status === 401) {
+                    return reject(new AuthError("You are not authorized to view this content"));
+                } else if (response.status !== 200) {
+                    return reject(response.message);
+                }
+
+                return resolve(response.data);
+            }).catch(reject);
+        });
+    }
 }
 
 export const movieService: MovieService = new MovieService();

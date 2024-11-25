@@ -1,3 +1,3 @@
 package com.MatchMyMovie.api.model.user;
 
-public record UserDTO(Long id, String username, String email) { }
+public record UserDTO(Long id, String username, String email, boolean isOnboarded) { }

@@ -29,7 +29,6 @@ public class SwipeService {
     }
 
     public SwipeDTO saveSwipe(SwipeCreationDTO swipe) {
-        // Get the authenticated user
         User user = this.userService.getAuthenticatedUser();
 
         Swipe newSwipe = new Swipe();
@@ -48,20 +47,10 @@ public class SwipeService {
                         () -> userPreferenceService.saveUserPreferenceBySwipe(newSwipe, genreId)
                 ));
 
-        // Save the updated user preferences
         this.userPreferenceService.saveUserPreferences(preferences);
         
         Swipe savedSwipe = this.swipeRepository.save(newSwipe);
 
         return new SwipeDTO(savedSwipe.getId(), savedSwipe.getMovieId(), user.getId(), savedSwipe.isLiked());
-    }
-
-    public List<Swipe> getSwipesByAuthenticatedUser() {
-        User authenticatedUser = this.userService.getAuthenticatedUser();
-        return authenticatedUser.getSwipes();
-    }
-
-    public Integer getSwipesCountByAuthenticatedUser() {
-        return this.getSwipesByAuthenticatedUser().size();
     }
 }

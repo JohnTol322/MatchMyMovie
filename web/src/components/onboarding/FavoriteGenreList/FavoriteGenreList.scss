@@ -1,0 +1,17 @@
+.checkbox-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.genre-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}

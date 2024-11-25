@@ -1,7 +1,6 @@
 package com.MatchMyMovie.api.service;
 
-import com.MatchMyMovie.api.model.movie.MovieDetails;
-import com.MatchMyMovie.api.model.movie.TmdbResponse;
+import com.MatchMyMovie.api.model.movie.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TmdbApiService {
@@ -57,5 +58,54 @@ public class TmdbApiService {
         return response.getBody();
     }
 
+    public Genre[] getAllMovieGenres() {
+        String url = "https://api.themoviedb.org/3/genre/movie/list";
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<GenreResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, GenreResponse.class);
+        return Objects.requireNonNull(response.getBody()).getGenres();
+    }
+
+    public List<WatchProvider> getWatchProviders() {
+        String url = "https://api.themoviedb.org/3/watch/providers/movie?watch_region=NL";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<WatchProviderResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, WatchProviderResponse.class);
+        return Objects.requireNonNull(response.getBody()).getResults();
+    }
+
+    public TmdbResponse searchForMovie(String query) {
+        String url = "https://api.themoviedb.org/3/search/movie?query={0}";
+        String urlWithQuery = MessageFormat.format(url, query);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TmdbResponse> response = restTemplate.exchange(urlWithQuery, HttpMethod.GET, entity, TmdbResponse.class);
+        return response.getBody();
+    }
+
+
+    public TmdbResponse getRecommendationsByMovieId(Integer movieId) {
+        String url = "https://api.themoviedb.org/3/movie/{0}/recommendations";
+        String urlWithId = MessageFormat.format(url, movieId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TmdbResponse> response = restTemplate.exchange(urlWithId, HttpMethod.GET, entity, TmdbResponse.class);
+        return response.getBody();
+    }
 }
