@@ -1,0 +1,66 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches:
+      - main  # Pas dit aan naar de branch die je wilt gebruiken
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_HOST: "188.245.178.94"       # Hetzner server IP
+      SSH_USER: "root"             # Gebruikersnaam (meestal root)
+      APP_DIR: "/var/www/MatchMyMovie"   # Locatie op de server
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Stel SSH-sleutel in
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+      # Bouw frontend (React)
+      - name: Build frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+        run: |
+          cd web
+          npm install
+          npm run build
+
+      # Bouw backend (Spring Boot)
+      - name: Build backend
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: |
+          cd api
+          ./gradlew clean build
+
+      # Upload bestanden naar de server
+      - name: Deploy application
+        run: |
+          ssh $SSH_USER@$SSH_HOST "mkdir -p $APP_DIR"
+          # Backend jar
+          scp backend/build/libs/*.jar $SSH_USER@$SSH_HOST:$APP_DIR/backend.jar
+          # Start backend
+          ssh $SSH_USER@$SSH_HOST "pkill -f backend.jar || true && nohup java -jar $APP_DIR/backend.jar > $APP_DIR/backend.log 2>&1 &"
+           # Configureer Nginx
+          ssh $SSH_USER@$SSH_HOST "echo 'server {
+              listen 80;
+              root $APP_DIR/frontend;
+              index index.html;
+              location /api/ {
+                proxy_pass http://localhost:8080/;
+              }
+            }' > /etc/nginx/sites-available/my-app && ln -s /etc/nginx/sites-available/my-app /etc/nginx/sites-enabled/ && systemctl restart nginx"
