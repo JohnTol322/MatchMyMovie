@@ -28,22 +28,26 @@ jobs:
           ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
 
       # Bouw frontend (React)
-      - name: Build frontend
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'
+
+      - name: Build frontend
         run: |
           cd web
           npm install
           npm run build
 
       # Bouw backend (Spring Boot)
-      - name: Build backend
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-      - run: |
+
+      - name: Build backend
+        run: |
           cd api
           ./gradlew clean build
 
@@ -51,11 +55,15 @@ jobs:
       - name: Deploy application
         run: |
           ssh $SSH_USER@$SSH_HOST "mkdir -p $APP_DIR"
-          # Backend jar
-          scp backend/build/libs/*.jar $SSH_USER@$SSH_HOST:$APP_DIR/backend.jar
+          # Upload backend jar
+          scp api/build/libs/*.jar $SSH_USER@$SSH_HOST:$APP_DIR/backend.jar
           # Start backend
           ssh $SSH_USER@$SSH_HOST "pkill -f backend.jar || true && nohup java -jar $APP_DIR/backend.jar > $APP_DIR/backend.log 2>&1 &"
-           # Configureer Nginx
+
+          # Upload frontend (React)
+          scp -r web/build/* $SSH_USER@$SSH_HOST:$APP_DIR/frontend/
+
+          # Configureer Nginx
           ssh $SSH_USER@$SSH_HOST "echo 'server {
               listen 80;
               root $APP_DIR/frontend;
