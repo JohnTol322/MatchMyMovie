@@ -31,7 +31,7 @@ const OnboardingPage: React.FC = () => {
         if (onboardStatus === "finished") {
             navigate("/matcher");
         }
-    }, []);
+    }, [navigate]);
 
     const renderStep = () => {
         switch (currentStep) {

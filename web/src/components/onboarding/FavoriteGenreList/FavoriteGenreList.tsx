@@ -29,7 +29,7 @@ const FavoriteGenreList: React.FC<FavoriteGenreListProps> = ({
                 console.error(error);
             }
         });
-    }, []);
+    }, [navigate]);
 
     const handleGenreChange = (event: React.ChangeEvent<HTMLInputElement>, genre: Genre) => {
         const genreName = event.target.name;
