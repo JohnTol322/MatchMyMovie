@@ -16,7 +16,7 @@ const CardView: React.FC<CardViewProps> = ({
     return (
         <div className="card">
             <img style={imageStyle}
-                 src={require(`../../../../assets/images/${image}`)} alt="image"/>
+                 src={require(`../../../../assets/images/${image}`)} alt="example"/>
             <b>{phrase}</b>
         </div>
     );

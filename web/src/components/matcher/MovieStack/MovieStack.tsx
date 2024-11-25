@@ -24,6 +24,7 @@ const MovieStack: React.FC<MovieStackProps> = ({
                              zIndex: stack.length - index
                          }}
                          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                         alt={movie.title}
                     />
                 ))
             }
