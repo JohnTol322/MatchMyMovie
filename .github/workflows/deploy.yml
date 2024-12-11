@@ -39,10 +39,10 @@ jobs:
         uses: nogsantos/scp-deploy@master
         with:
           src: .
-          host: $SSH_HOST
-          remote: $APP_DIR
+          host: ${{ secrets.SSH_HOST }}
+          remote: ${{ secrets.APP_DIR }}
           port: 22
-          user: $SSH_USER
+          user: ${{ secrets.SSH_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           
         # SSH into server en run docker compose
