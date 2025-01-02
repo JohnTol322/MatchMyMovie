@@ -35,6 +35,11 @@ jobs:
 #        run: |
 #          scp -r . $SSH_USER@$SSH_HOST:$APP_DIR
 
+      - name: Debug directory
+        run: |
+          echo "Current working directory: $(pwd)"
+          ls -la
+
       - name: Publish
         uses: nogsantos/scp-deploy@master
         with:
