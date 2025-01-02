@@ -35,12 +35,6 @@ jobs:
 #        run: |
 #          scp -r . $SSH_USER@$SSH_HOST:$APP_DIR
 
-      # Ensure the remote directory exists
-      - name: Ensure remote directory exists
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ${{ secrets.APP_DIR }}"
-
-
       - name: Publish
         uses: nogsantos/scp-deploy@master
         with:
