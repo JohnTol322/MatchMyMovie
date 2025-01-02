@@ -34,11 +34,12 @@ jobs:
 #      - name: Upload files
 #        run: |
 #          scp -r . $SSH_USER@$SSH_HOST:$APP_DIR
-      # Step 2: Debug current directory
-      - name: Debug local workspace
+
+      # Ensure the remote directory exists
+      - name: Ensure remote directory exists
         run: |
-          echo "Workspace: ${{ github.workspace }}"
-          ls -la ${{ github.workspace }}
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ${{ secrets.APP_DIR }}"
+
 
       - name: Publish
         uses: nogsantos/scp-deploy@master
