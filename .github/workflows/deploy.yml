@@ -34,11 +34,11 @@ jobs:
 #      - name: Upload files
 #        run: |
 #          scp -r . $SSH_USER@$SSH_HOST:$APP_DIR
-
-      - name: Debug directory
+      # Step 2: Debug current directory
+      - name: Debug local workspace
         run: |
-          echo "Current working directory: $(pwd)"
-          ls -la
+          echo "Workspace: ${{ github.workspace }}"
+          ls -la ${{ github.workspace }}
 
       - name: Publish
         uses: nogsantos/scp-deploy@master
