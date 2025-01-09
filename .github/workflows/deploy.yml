@@ -65,7 +65,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            cd $APP_DIR
+            cd /var/www/MatchMyMovie
             ls -al
             docker compose down || true    # Stop bestaande containers
             docker compose build           # Bouw de nieuwe containers
