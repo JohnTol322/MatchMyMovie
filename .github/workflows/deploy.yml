@@ -33,10 +33,10 @@ jobs:
       # Maak het env.properties bestand met GitHub Secrets
       - name: Create env.properties from secrets
         run: |
-          echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > env.properties
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> env.properties
-          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> env.properties
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> env.properties
+          echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > api/src/main/resources/env.properties
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> api/src/main/resources/env.properties
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> api/src/main/resources/env.properties
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> api/src/main/resources/env.properties
         shell: bash
 
       - name: Publish
