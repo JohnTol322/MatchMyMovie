@@ -65,7 +65,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            cd $APP_DIR/workspace/
+            cd $APP_DIR
+            ls -al
             docker compose down || true    # Stop bestaande containers
             docker compose build           # Bouw de nieuwe containers
             docker compose up -d           # Start de containers in detached mode
