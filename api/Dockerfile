@@ -2,7 +2,7 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . .
-RUN chmod +x ./gradlew build
+RUN chmod +x ./gradlew && ./gradlew build
 RUN ./gradlew build
 
 # Stage 2: Create the runtime container
