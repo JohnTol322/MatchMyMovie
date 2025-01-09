@@ -52,7 +52,7 @@ jobs:
         # SSH into server en run docker compose
       - name: SSH into server and run Docker Compose
         run: |
-            ssh -T $SSH_USER@$SSH_HOST << 'EOF'
+          ssh -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
               cd $APP_DIR
               docker-compose down || true    # Stop bestaande containers
               docker-compose build           # Bouw de nieuwe containers
