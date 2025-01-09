@@ -50,13 +50,23 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           
         # SSH into server en run docker compose
-      - name: SSH into server and run Docker Compose
-        run: |
-            ssh ${{ secrets.DEPLOY_SSH_KEY }} $SSH_USER@$SSH_HOST << 'EOF'
-              cd $APP_DIR
-              docker-compose down || true    # Stop bestaande containers
-              docker-compose build           # Bouw de nieuwe containers
-              docker-compose up -d           # Start de containers in detached mode
-            EOF
+#      - name: SSH into server and run Docker Compose
+#        run: |
+#            ssh ${{ secrets.DEPLOY_SSH_KEY }} $SSH_USER@$SSH_HOST << 'EOF'
+#              cd $APP_DIR
+#              docker-compose down || true    # Stop bestaande containers
+#              docker-compose build           # Bouw de nieuwe containers
+#              docker-compose up -d           # Start de containers in detached mode
+#            EOF
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd $APP_DIR
+            docker-compose down || true    # Stop bestaande containers
+            docker-compose build           # Bouw de nieuwe containers
+            docker-compose up -d           # Start de containers in detached mode
 
-          
