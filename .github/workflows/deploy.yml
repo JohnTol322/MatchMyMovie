@@ -1,21 +1,18 @@
-name: Deploy to Hetzner
+name: Deploy to production
 
 on:
-  pull_request:
-    branches:
-      - develop
   push:
     branches:
-      - main  # Pas dit aan naar de branch die je wilt gebruiken
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     env:
-      SSH_HOST: "188.245.178.94"       # Hetzner server IP
-      SSH_USER: "root"             # Gebruikersnaam (meestal root)
-      APP_DIR: "/var/www/MatchMyMovie"   # Locatie op de server
+      SSH_HOST: "188.245.178.94"
+      SSH_USER: "root"
+      APP_DIR: "/var/www/MatchMyMovie"
 
     steps:
       # Checkout repository
@@ -30,8 +27,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
 
-      # Maak het env.properties bestand met GitHub Secrets
-      - name: Create env.properties from secrets
+      # Maak het env.properties bestand
+      - name: Create env.properties file for API
         run: |
           echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > api/src/main/resources/env.properties
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> api/src/main/resources/env.properties
@@ -49,16 +46,7 @@ jobs:
           user: ${{ secrets.SSH_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           
-        # SSH into server en run docker compose
-#      - name: SSH into server and run Docker Compose
-#        run: |
-#            ssh ${{ secrets.DEPLOY_SSH_KEY }} $SSH_USER@$SSH_HOST << 'EOF'
-#              cd $APP_DIR
-#              docker-compose down || true    # Stop bestaande containers
-#              docker-compose build           # Bouw de nieuwe containers
-#              docker-compose up -d           # Start de containers in detached mode
-#            EOF
-      - name: executing remote ssh commands using password
+      - name: Start Docker containers
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -66,7 +54,6 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /var/www/MatchMyMovie/workspace
-            ls -al
             docker compose down || true    # Stop bestaande containers
             docker compose build           # Bouw de nieuwe containers
             docker compose up -d           # Start de containers in detached mode
