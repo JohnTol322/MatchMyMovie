@@ -1,0 +1,38 @@
+.tagline {
+  color: #D3C4C4;
+  font-family: "Inria Sans", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 450px;
+}
+
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: #FFFFFF;
+  font-family: "Inria Sans", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+
+  .title {
+    font-weight: 700;
+  }
+
+  .summary-items {
+    font-weight: 300;
+    display: flex;
+  }
+}

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather&display=swap');
+
+.page-background {
+  background: linear-gradient(145deg, #242B33 20.6%, #141C26 62.54%);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 100vh;
+  width: 100vw;
+
+  .login-title {
+    width: 680px;
+
+    b {
+      color: #FFF;
+      font-family: "Inria Sans", sans-serif;
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    p {
+      color: #FFF;
+      font-family: Inter, sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+
+      .register-link {
+        color: #FFF;
+        font-family: Inter, sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-decoration-skip-ink: auto;
+        text-decoration-thickness: auto;
+        text-underline-offset: auto;
+        text-underline-position: from-font;
+      }
+    }
+    font-family: Inter, sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 58px;
+    color: #FFF;
+    margin-top: 45px;
+  }
+
+  .login-form-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 672px;
+    border-radius: 40px;
+    background: #3C4755;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    margin-top: 60px;
+    font-family: Inter, sans-serif;
+
+    .input-fields {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 200px;
+
+      input {
+        width: 670px;
+        height: 70px;
+        border-radius: 10px;
+        font-size: 24px;
+      }
+
+    }
+    button {
+      width: 670px;
+      height: 70px;
+      border-radius: 10px;
+      margin-top: 20px;
+      background: #4BBBAE;
+      color: #FFF;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      margin-bottom: 100px;
+    }
+  }
+}

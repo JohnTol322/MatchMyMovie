@@ -1,0 +1,7 @@
+.watch-provider-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  height: 420px;
+  overflow-y: scroll;
+}

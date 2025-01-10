@@ -1,0 +1,60 @@
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_HOST: "188.245.178.94"
+      SSH_USER: "root"
+      APP_DIR: "/var/www/MatchMyMovie"
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Stel SSH-sleutel in
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+      # Maak het env.properties bestand
+      - name: Create env.properties file for API
+        run: |
+          echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" > api/src/main/resources/env.properties
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> api/src/main/resources/env.properties
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> api/src/main/resources/env.properties
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> api/src/main/resources/env.properties
+        shell: bash
+
+      - name: Publish
+        uses: nogsantos/scp-deploy@master
+        with:
+          src: ${{ github.workspace }}
+          host: ${{ secrets.SSH_HOST }}
+          remote: ${{ secrets.APP_DIR }}
+          port: 22
+          user: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          
+      - name: Start Docker containers
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /var/www/MatchMyMovie/workspace
+            docker compose down || true    # Stop bestaande containers
+            docker compose build           # Bouw de nieuwe containers
+            docker compose up -d           # Start de containers in detached mode
+
