@@ -4,7 +4,14 @@ import AuthService from "./AuthService";
 import AuthError from "../models/errors/AuthError";
 
 class ApiService {
-    static apiUrl: string = "http://localhost:8080";
+    public static getApiUrl(): string {
+        if (process.env.NODE_ENV === 'production') {
+            return "http://188.245.178.94:8080";
+        }
+
+        return "http://localhost:8080";
+    }
+
     public call<T>(path: string, method: HttpMethod = HttpMethod.GET, secure: boolean = false, body: string | null = null, formData: FormData | null = null): Promise<ApiResponse<T>> {
         return new Promise((resolve, reject) => {
             const requestMethod: string = HttpMethod[method];
@@ -33,7 +40,7 @@ class ApiService {
                 requestOptions.body = formData;
             }
 
-            fetch(`${ApiService.apiUrl}${path}`, requestOptions)
+            fetch(`${ApiService.getApiUrl()}${path}`, requestOptions)
                 .then(response => response.json())
                 .then(jsonResponse => {
                     if (!jsonResponse) {
